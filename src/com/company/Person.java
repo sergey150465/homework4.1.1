@@ -13,12 +13,6 @@ public class Person {
         this.surname = personBuilder.surname;
         this.age = personBuilder.age;
         this.address = personBuilder.address;
-        if (getName() == null || getSurname() == null) {
-            throw new IllegalStateException("name и surname не могут быть нулевыми!");
-        }
-        if (age < 0) {
-            throw new IllegalArgumentException("age не может быть отрицательным!");
-        }
     }
 
     public boolean hasAge() {
@@ -26,11 +20,7 @@ public class Person {
     }
 
     public boolean hasAddress() {
-        boolean result = true;
-        if (getAddress() == null) {
-            result = false;
-        }
-        return result;
+        return getAddress() != null;
     }
 
     public String getName() {
@@ -42,7 +32,11 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        return OptionalInt.of(age);
+        if (age == 0) {
+            return OptionalInt.empty();
+        } else {
+            return OptionalInt.of(age);
+        }
     }
 
     public String getAddress() {
@@ -54,7 +48,7 @@ public class Person {
     }
 
     public void happyBirthday() {
-        if (hasAge() == true) {
+        if (hasAge()) {
             age++;
         }
     }

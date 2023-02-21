@@ -6,6 +6,10 @@ public class PersonBuilder {
     protected int age;
     protected String address;
 
+    public PersonBuilder() {
+
+    }
+
     public PersonBuilder setName(String name) {
         this.name = name;
         return this;
@@ -18,6 +22,9 @@ public class PersonBuilder {
 
     public PersonBuilder setAge(int age) {
         this.age = age;
+        if (age < 0) {
+            throw new IllegalArgumentException("age не может быть отрицательным!");
+        }
         return this;
     }
 
@@ -27,6 +34,9 @@ public class PersonBuilder {
     }
 
     public Person build() {
+        if (name == null || surname == null) {
+            throw new IllegalStateException("Не все поля заполнены!");
+        }
         return new Person(this);
     }
 }
